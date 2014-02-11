@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/quiz.css" media="screen">
+</head>
+<body>
+<div id="top">
+    <form id="login" method="post">
+        Username:<input type="text" name="user" id="user" value=""/>
+        Password:<input type="text" name="password" id="password" value=""/>
+        <input type="button" value="login" id="loginBtn"/>
+    </form>
+    <form id="myForm" class="hidden" method="post">
+        <ul>
+            <li id="question">
+
+            </li>
+            <input type="button" value="Next" id="nextBtn" />
+            <input type="button" value="Back" id="backBtn" />
+        </ul>
+    </form>
+</div>
+<ul id="submittedItems"></ul>
+<script type="text/javascript" src="../javascripts/quizData.js"></script>
+<script type="text/javascript" src="../javascripts/jquery-2.0.3.js"></script>
+<script type="text/javascript" src="../javascripts/handlebars.js"></script>
+<script type="text/javascript" src="../javascripts/quiz.js"></script>
+<script id="displayQuestion-template" type="text/x-handlebars-template">
+    {{ this.question }}
+    <ul id="list">
+        {{#each this.choices}}
+        <li class="item">
+            {{ this }}
+            <label></label>
+            <input type="radio" name="answer" value="">
+        </li>
+        {{/each}}
+</script>
+</body>
+</html>
