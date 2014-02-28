@@ -2,40 +2,74 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="../stylesheets/quiz.css" media="screen">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../stylesheets/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/quiz.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap-3.1.1-dist/css/bootstrap.min.css">
 </head>
 <body>
+<div class="container">
 <div id="top">
-    <form id="login" method="post">
-        Username:<input type="text" name="user" id="user" value=""/>
-        Password:<input type="text" name="password" id="password" value=""/>
-        <input type="button" value="login" id="loginBtn"/>
+    <form id="login" class="form-horizontal" method="post">
+        <div class="form-group">
+            <label for="user">Username</label>
+            <input type="email" name="user" id="user" class="form-control" placeholder="Enter username" value=""/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="button" value="login" id="loginBtn" class="btn btn-ttc"/>
+        </div>
     </form>
     <form id="myForm" class="hidden" method="post">
-        <ul>
-            <li id="question">
-
-            </li>
-            <input type="button" value="Next" id="nextBtn" />
-            <input type="button" value="Back" id="backBtn" />
-        </ul>
+        <div id="question">
+            <ul id="list" class="list-group">
+                    <li class="list-group-item">
+                        <label></label>
+                        <input type="radio" name="answer" value="">
+                    </li>
+                    <li class="list-group-item">
+                        <label></label>
+                        <input type="radio" name="answer" value="">
+                    </li>
+                    <li class="list-group-item">
+                        <label></label>
+                        <input type="radio" name="answer" value="">
+                    </li>
+                    <li class="list-group-item">
+                        <label></label>
+                        <input type="radio" name="answer" value="">
+                    </li>
+                    <li class="list-group-item">
+                        <label></label>
+                        <input type="radio" name="answer" value="">
+                    </li>
+            </ul>
+        </div>
+        <input type="button" value="Next" id="nextBtn" class="btn btn-ttc" />
+        <input type="button" value="Back" id="backBtn" class="btn btn-ttc" />
+        <span id="submittedItems" class="label label-success"></span>
     </form>
-</div>
-<ul id="submittedItems"></ul>
 <script type="text/javascript" src="../javascripts/quizData.js"></script>
 <script type="text/javascript" src="../javascripts/jquery-2.0.3.js"></script>
+<script src="../bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../javascripts/handlebars.js"></script>
 <script type="text/javascript" src="../javascripts/quiz.js"></script>
 <script id="displayQuestion-template" type="text/x-handlebars-template">
     {{ this.question }}
-    <ul id="list">
+    <ul id="list" class="list-group">
         {{#each this.choices}}
-        <li class="item">
+        <li class="list-group-item">
             {{ this }}
             <label></label>
-            <input type="radio" name="answer" value="">
+            <input type="radio" name="answer" value="" {{#ifCond ../this.selectedAnswer @index}}checked=true{{/ifCond}}>
         </li>
         {{/each}}
+    </ul>
 </script>
 </body>
 </html>

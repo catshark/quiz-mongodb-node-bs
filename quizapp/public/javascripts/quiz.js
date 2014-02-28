@@ -25,12 +25,19 @@ var totalScore = 0;
  selectedAnswer:-1}];*/
 var allQuestions = JSON.parse(jsonstr);
 
-var ul = document.getElementById("submittedItems");
+var span = document.getElementById("submittedItems");
 
 function removeWarningMessage() {
     // remove warning message if it exists
-    if (ul.childNodes[0]) {
-        ul.removeChild(ul.childNodes[0]);
+    if (span.childNodes[0]) {
+        span.removeChild(span.childNodes[0]);
+    }
+}
+
+function displayPrevSelectedAns(radioBtns) {
+    // if answer to current question has been previously selected, display it
+    if (allQuestions[index].selectedAnswer !== -1) {
+        radioBtns[allQuestions[index].selectedAnswer].checked = true;
     }
 }
 
@@ -74,6 +81,14 @@ function displayQAndAs(){
 
     $("#question").fadeOut( "slow", function() {
 
+        // custom helper function for equality check of two elements
+        Handlebars.registerHelper('ifCond', function(v1, v2, options) {
+            if(v1 === v2) {
+                return options.fn(this);
+            }
+            return options.inverse(this);
+        });
+
         // display question and answers
         // Get the html text node from the displayQuestion template and compile it
         var disQTemplate = document.getElementById("displayQuestion-template").innerHTML;
@@ -81,16 +96,12 @@ function displayQAndAs(){
 
         q.innerHTML = compiled(allQuestions[index]);
 
-        // if answer to current question has been previously selected, display it
-        if (allQuestions[index].selectedAnswer !== -1) {
-            radioBtns[allQuestions[index].selectedAnswer].checked = true;
-        }
-
         removeWarningMessage();
+
+        displayPrevSelectedAns(radioBtns);
     });
 
-
-    $('#question').fadeIn();
+    $('#question').fadeIn("slow");
 }
 
 function rememberSelectedAnswer() {
@@ -142,12 +153,20 @@ function submitAnswer() {
 
             var div = document.getElementById("top");
             var form = document.getElementById("myForm");
-            div.removeChild(form);
+
+            // hide question list and nav buttons
+            var next = document.getElementById("nextBtn");
+            var back = document.getElementById("backBtn");
+            var q = document.getElementById("question");
+
+            next.classList.add("hidden");
+            back.classList.add("hidden");
+            q.classList.add("hidden");
 
             var textScore = document.createTextNode("Your score is " + totalScore);
-            var li = document.createElement("li");
-            li.appendChild(textScore);
-            div.appendChild(li);
+            span.appendChild(textScore);
+            var br = document.createElement("br");
+            span.appendChild(br);
 
             // get average score from all user's who finished this quiz
 
@@ -161,9 +180,9 @@ function submitAnswer() {
                         avgScore = jsonObj.average;
 
                         var textAvg = document.createTextNode("average score is " + avgScore);
-                        li = document.createElement("li");
-                        li.appendChild(textAvg);
-                        div.appendChild(li);
+                        //li = document.createElement("li");
+                        span.appendChild(textAvg);
+                        //div.appendChild(li);
 
                     }
                 }
@@ -201,12 +220,12 @@ function submitAnswer() {
             displayQAndAs();
         }
     }
-    else if (!ul.hasChildNodes() ) {
-        var li = document.createElement("li");
+    else if (!span.hasChildNodes() ) {
 
         var textNode = document.createTextNode("Please select an answer!");
-        li.appendChild(textNode);
-        ul.appendChild(li);
+        span.appendChild(textNode);
+
+        span.classList.add("bg-info");
     }
 }
 

@@ -12,7 +12,6 @@ var fs = require('fs');
 
 // mongo
 var mongo = require('mongoskin');
-var monk = require('monk');
 var db = mongo.db([
     'localhost:27017/?auto_reconnect'
 ], {
