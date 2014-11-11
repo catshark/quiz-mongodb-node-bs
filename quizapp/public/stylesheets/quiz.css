@@ -25,7 +25,7 @@
 /* Note: you'll need to include all the appropriate gradients for various browsers and standards. */
 .btn-ttc {
     background-repeat: repeat-x;
-    background-image: linear-gradient(top, #009ED2 0%, #007DA7 100%);
+    background-image: linear-gradient(top, #009ED2 0%, #a73923 100%);
 }
 
 /* Set the hover state */
